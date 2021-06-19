@@ -1,6 +1,6 @@
 #!/bin/bash
 #------- qsub option ----------- 
-#PBS -A XMP
+#PBS -A PRORISM
 #PBS -q gpu
 #PBS -l elapstim_req=00:10:00 
 #PBS -T openmpi

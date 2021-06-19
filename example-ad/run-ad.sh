@@ -1,6 +1,6 @@
 #!/bin/bash
 #------- qsub option ----------- 
-#PBS -A XMP
+#PBS -A PRORISM
 #PBS -q gpu
 #PBS -b 1
 #PBS -l elapstim_req=24:00:00 
