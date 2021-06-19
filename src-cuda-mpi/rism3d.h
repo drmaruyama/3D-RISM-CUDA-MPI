@@ -31,6 +31,7 @@ private:
   void cal_ad1 (double * &);
   void cal_ad2 (double * &);
   void cal_Coulomb ();
+  void cal_euv (double * &);
   void cal_exchem (double * &);
   void cal_grad (double * &);
   void cal_LJ ();
@@ -42,6 +43,7 @@ private:
   void initialize_tuv ();
   void output_ad (double * &);
   void output_cuv ();
+  void output_euv (double * &);
   void output_grad (double * &);
   void output_guv ();
   void output_huv ();

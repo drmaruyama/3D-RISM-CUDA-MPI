@@ -9,12 +9,13 @@ void RISM3D :: output() {
 
   int flag = 0;
   if (myrank == 0) {
-    if (outlist.find("m") != -1) flag += 1;
-    if (outlist.find("d") != -1) flag += 2;
-    if (outlist.find("c") != -1) flag += 4;
-    if (outlist.find("g") != -1) flag += 8;
-    if (outlist.find("h") != -1) flag += 16;
-    if (outlist.find("a") != -1) flag += 32;
+    if (outlist.find("m") != string::npos) flag += 1;
+    if (outlist.find("d") != string::npos) flag += 2;
+    if (outlist.find("c") != string::npos) flag += 4;
+    if (outlist.find("g") != string::npos) flag += 8;
+    if (outlist.find("h") != string::npos) flag += 16;
+    if (outlist.find("a") != string::npos) flag += 32;
+    if (outlist.find("b") != string::npos) flag += 64;
   }
 
   MPI_Bcast(&flag, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -75,5 +76,20 @@ void RISM3D :: output() {
       delete[] ad2;
     }
     delete[] ad;
+  }
+
+  if ((flag & 64) == 64) {
+    double * euv;
+    double * euv2;
+    euv = new double[su -> num * sv -> natv];
+    cal_euv(euv);
+    if (myrank == 0) euv2 = new double[su -> num * sv -> natv];
+    MPI_Reduce(euv, euv2, su -> num * sv -> natv, MPI_DOUBLE, MPI_SUM, 0, 
+               MPI_COMM_WORLD);
+    if (myrank == 0) {
+      output_euv(euv2);
+      delete[] euv2;
+    }
+    delete[] euv;
   }
 }
