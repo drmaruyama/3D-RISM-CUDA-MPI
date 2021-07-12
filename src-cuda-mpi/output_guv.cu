@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
+#include <mpi.h>
 #include "rism3d.h"
 #include "extension.h"
 
@@ -10,42 +11,42 @@ void RISM3D :: output_guv() {
     cout << "outputting Guv to file:  " << fname + extguv << "  ..." << endl;
   }
 
-  ofstream out_file;
-  char snum[10];
-  sprintf(snum, "%d", myrank);
-  out_file.open ((fname + extguv + snum).c_str());
+  MPI_Status *status;
+  MPI_File file_guv;
+  MPI_File_open(MPI_COMM_WORLD, (fname + extguv).c_str(),
+                MPI_MODE_WRONLY + MPI_MODE_CREATE, MPI_INFO_NULL, &file_guv);
 
   if (myrank == 0) {
-    out_file << ce -> box[0] << " " 
-	     << ce -> box[1] << " " 
-	     << ce -> box[2] << " " 
-	     << endl
-	     << ce -> grid[0] << " " 
-	     << ce -> grid[1] << " " 
-	     << ce -> grid[2] << " " 
-	     << endl 
-	     << su -> num << endl;
-
-    for (int iu = 0; iu < su -> num; ++iu) {
-      int num = iu * 3;
-      out_file << su -> q[iu] << " "
-	       << su -> sig[iu] << " " 
-	       << su -> eps[iu] << " "
-	       << su -> r[num] << " "
-	       << su -> r[num + 1] << " "
-	       << su -> r[num + 2] << endl;
-    }
-    out_file << sv -> natv << endl;
+    int nn = sv -> natv;
+    int * g = ce -> grid;
+    double * b = ce -> box;
+    MPI_File_write(file_guv, &nn, 1, MPI_INTEGER, status);
+    MPI_File_write(file_guv, &g[0], 3, MPI_INTEGER, status);
+    MPI_File_write(file_guv, &b[0], 3, MPI_DOUBLE_PRECISION, status);
   }
 
-  for (int ig = 0; ig < ce -> mgrid; ++ig) {
-    for (int iv = 0; iv < sv -> natv; ++iv) {
-      out_file << guv[iv][ig].real() << " ";
+  double * work = new double[ce -> mgrid * sv -> natv];
+  for (int iv = 0; iv < sv -> natv; ++iv) {
+    int i = ce -> mgrid * iv;
+    for (int ig = 0; ig < ce -> mgrid; ++ig) {
+      work[i + ig] = guv[iv][ig].real();
     }
-    out_file << endl;
   }
+
+  int num = ce -> grid[0] * ce -> grid[1] / yprocs;
+  for (int iv = 0; iv < sv -> natv; ++iv) {
+    for (int k = 0; k < ce -> grid[2] / zprocs; ++k) {
+      int p = sizeof(int) * 4 + sizeof(double) * (3 + yrank * num
+              + k * num * yprocs + zrank * ce -> mgrid * yprocs 
+              + ce -> ngrid * iv);
+      MPI_File_seek(file_guv, p, MPI_SEEK_SET);
+      int i = k * num + ce -> mgrid * iv;
+      MPI_File_write_all(file_guv, &work[i], num,
+                         MPI_DOUBLE_PRECISION, status);
+    }
+  }
+
+  MPI_File_close(&file_guv);
 
   if (myrank == 0) cout << "done." << endl;
-
-  out_file.close();
 } 
