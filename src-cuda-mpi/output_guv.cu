@@ -33,14 +33,14 @@ void RISM3D :: output_guv() {
     }
   }
 
-  int num = ce -> grid[0] * ce -> grid[1] / yprocs;
+  size_t num = ce -> grid[0] * ce -> grid[1] / yprocs;
   for (int iv = 0; iv < sv -> natv; ++iv) {
     for (int k = 0; k < ce -> grid[2] / zprocs; ++k) {
-      int p = sizeof(int) * 4 + sizeof(double) * (3 + yrank * num
+      size_t p = sizeof(int) * 4 + sizeof(double) * (3 + yrank * num
               + k * num * yprocs + zrank * ce -> mgrid * yprocs 
               + ce -> ngrid * iv);
       MPI_File_seek(file_guv, p, MPI_SEEK_SET);
-      int i = k * num + ce -> mgrid * iv;
+      size_t i = k * num + ce -> mgrid * iv;
       MPI_File_write_all(file_guv, &work[i], num,
                          MPI_DOUBLE_PRECISION, status);
     }
