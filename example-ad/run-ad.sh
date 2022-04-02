@@ -5,10 +5,11 @@
 #PBS -b 1
 #PBS -l elapstim_req=24:00:00 
 #PBS -T openmpi
-#PBS -v NQSV_MPI_VER=gdr/4.0.3/gcc8.3.1-cuda10.2
+#PBS -v NQSV_MPI_VER=gdr/4.1.2/gcc8.3.1-cuda11.6.2-ucx1.7.0
 #PBS -v OMP_NUM_THREADS=6
 #------- Program execution ----------- 
-module load openmpi/gdr/4.0.3/gcc8.3.1-cuda10.2
+module load gcc/8.3.1
+module load openmpi/gdr/4.1.2/gcc8.3.1-cuda11.6.2-ucx1.7.0
 INP=gpcr.inp
 cd $PBS_O_WORKDIR
 mpirun ${NQSII_MPIOPTS} -np 4 -npernode 4 ./3drism-cuda-mpi -l 0.025 $INP
@@ -94,4 +95,3 @@ mpirun ${NQSII_MPIOPTS} -np 4 -npernode 4 ./3drism-cuda-mpi -e 0.925 $INP
 mpirun ${NQSII_MPIOPTS} -np 4 -npernode 4 ./3drism-cuda-mpi -e 0.95 $INP
 mpirun ${NQSII_MPIOPTS} -np 4 -npernode 4 ./3drism-cuda-mpi -e 0.975 $INP
 mpirun ${NQSII_MPIOPTS} -np 4 -npernode 4 ./3drism-cuda-mpi -e 1.0 $INP
-

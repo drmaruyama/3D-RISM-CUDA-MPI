@@ -1,4 +1,4 @@
-CUDA_DIR=/usr/local/cuda-10.2
+CUDA_DIR=/usr/local/cuda-11.6.2
 #MPI_DIR=/opt/MPI/OpenMPI/1.6.5/GNU/4.4.7
 
 CC 	= mpic++
