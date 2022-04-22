@@ -31,3 +31,24 @@ Cell: 256^3 Angstrom^3 (512^3 grids)
 64 (256)	 59.2		  33.8
 </pre>
 (Performed on Cygnus in University of Tsukuba, https://www.ccs.tsukuba.ac.jp/eng/supercomputers/)
+
+#### REFERENCE
+[1] Yutaka Maruyama, Fumio Hirata
+
+J. Chem. Theory Comput. 2012, 8, 3015-3021
+
+Modified Anderson Method for Accelerating 3D-RISM Calculations Using Graphics Processing Unit
+
+https://doi.org/10.1021/ct300355r
+
+https://pubs.acs.org/doi/abs/10.1021/ct300355r
+
+[2] Yutaka Maruyama, Norio Yoshida, Hiroto Tadano, Daisuke Takahashi, Mitsuhisa Sato, Fumio Hirata
+
+J. Comp. Chem. 2014, 35, 1347-1355
+
+Massively parallel implementation of 3D‐RISM calculation with volumetric 3D‐FFT
+
+https://doi.org/10.1002/jcc.23619
+ 
+https://onlinelibrary.wiley.com/doi/abs/10.1002/jcc.23619
