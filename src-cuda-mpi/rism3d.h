@@ -24,7 +24,7 @@ public:
     sv = new Solvent; ma = new AN2; fft = new FFT3D;}
   ~RISM3D () {delete ce, co, su, sv;} 
   void set_ad(double, int);
-  void initialize (char[], int);
+  void initialize (string, string, int);
   void iterate ();    
   void output ();
 private:
@@ -48,9 +48,9 @@ private:
   void output_guv ();
   void output_huv ();
   void output_xmu (double * &, double);
-  void read_input (char[]);
+  void read_input (string, string);
   void read_tuv ();
-  void set_fname (char[]);
+  void set_fname (string, string);
   void set_cuda ();
   void set_device (int);
   void set_mpi ();

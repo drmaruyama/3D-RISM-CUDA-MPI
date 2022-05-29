@@ -1,7 +1,7 @@
 #include <sched.h>
 #include "rism3d.h"
 
-void RISM3D :: initialize(char inputfile[], int dn) {
+void RISM3D :: initialize(string control, string structure, int dn) {
 #ifdef TEST
   double t[4];
   t[0] = MPI_Wtime();
@@ -19,9 +19,9 @@ void RISM3D :: initialize(char inputfile[], int dn) {
 
   set_mpi();
   set_device(dn);
-  read_input(inputfile);
+  read_input(control, structure);
   set_cuda();
-  set_fname(inputfile);
+  set_fname(control, structure);
 #ifdef TEST
   t[1] = MPI_Wtime();
 #endif

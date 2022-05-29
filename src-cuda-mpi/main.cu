@@ -6,13 +6,21 @@
 int main (int argc, char * argv[]) {
   RISM3D * system;
   int ch, cu, dn;
+  string input;
+  string structure;
 
   system = new RISM3D;
 
-  while ((ch = getopt(argc, argv, "c:l:e:")) != -1) {
+  while ((ch = getopt(argc, argv, "c:i:s:l:e:")) != -1) {
     switch (ch){
     case 'c':
       cu = atoi(optarg);
+      break;
+    case 'i':
+      input = optarg;
+      break;
+    case 's':
+      structure = optarg;
       break;
     case 'l':
       system -> set_ad (atof(optarg), 1);
@@ -22,9 +30,13 @@ int main (int argc, char * argv[]) {
       break;
     }
   }
-  if (argc == 1) {
-    cout << "No parameter file!" << endl ;
-    return (1) ;
+
+  if (input.empty() || structure.empty()) {
+    if (argv[optind] == NULL) {
+      cout << "No input file!" << endl;
+      return (1);
+    }
+    input = argv[optind];
   }
 
 #ifdef OPENMPI
@@ -40,7 +52,7 @@ int main (int argc, char * argv[]) {
   //  int provided;
   //  MPI_Init_thread(&argc, &argv, MPI_THREAD_FUNNELED, &provided);
 
-  system -> initialize(argv[optind], dn);
+  system -> initialize(input, structure, dn);
   system -> iterate();
   system -> output();    
 
