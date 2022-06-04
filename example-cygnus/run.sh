@@ -4,7 +4,7 @@
 #PBS -q gpu
 #PBS -l elapstim_req=00:10:00 
 #PBS -T openmpi
-#PBS -v NQSV_MPI_VER=gdr/4.1.2/gcc8.3.1-cuda11.6.2-ucx1.7.0
+#PBS -v NQSV_MPI_VER=gcc8.3.1-cuda10.2-ucx1.7.0
 #PBS -v OMP_NUM_THREADS=6
 #------- Program execution ----------- 
 module load use.own
