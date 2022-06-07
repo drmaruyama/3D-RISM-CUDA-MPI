@@ -5,7 +5,7 @@
 #include "rism3d.h"
 #include "version.h"
 
-void RISM3D :: read_input (string control, string structure) {
+void RISM3D :: read_input (string control, string structure, bool centering) {
   int num;
 
   if (myrank == 0) {
@@ -54,7 +54,12 @@ void RISM3D :: read_input (string control, string structure) {
     }
 
     in_file.close ();
+
+    if (centering) {
+      ce -> shift = su -> centering();
+    }
   }
+
   MPI_Bcast(&clos, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&num, 1, MPI_INT, 0, MPI_COMM_WORLD);
   if (myrank != 0) su -> init(num);

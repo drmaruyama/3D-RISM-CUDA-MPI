@@ -8,6 +8,7 @@ class Solute {
   Solute(){}
   ~Solute(){delete[] q, sig, eps, r;}
   void init(int);
+  double * centering();
   void setup_cuda();
   void setup_mpi();
   double * q;

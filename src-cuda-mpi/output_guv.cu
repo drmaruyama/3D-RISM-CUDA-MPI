@@ -20,9 +20,11 @@ void RISM3D :: output_guv() {
     int nn = sv -> natv;
     int * g = ce -> grid;
     double * b = ce -> box;
+    double * s = ce -> shift;
     MPI_File_write(file_guv, &nn, 1, MPI_INTEGER, status);
     MPI_File_write(file_guv, &g[0], 3, MPI_INTEGER, status);
     MPI_File_write(file_guv, &b[0], 3, MPI_DOUBLE_PRECISION, status);
+    MPI_File_write(file_guv, &s[0], 3, MPI_DOUBLE_PRECISION, status);
   }
 
   double * work = new double[ce -> mgrid * sv -> natv];
@@ -33,10 +35,10 @@ void RISM3D :: output_guv() {
     }
   }
 
-  size_t num = ce -> grid[0] * ce -> grid[1] / yprocs;
+  int num = ce -> grid[0] * ce -> grid[1] / yprocs;
   for (int iv = 0; iv < sv -> natv; ++iv) {
     for (int k = 0; k < ce -> grid[2] / zprocs; ++k) {
-      size_t p = sizeof(int) * 4 + sizeof(double) * (3 + yrank * num
+      size_t p = sizeof(int) * 4 + sizeof(double) * (6 + yrank * num
               + k * num * yprocs + zrank * ce -> mgrid * yprocs 
               + ce -> ngrid * iv);
       MPI_File_seek(file_guv, p, MPI_SEEK_SET);
@@ -46,6 +48,27 @@ void RISM3D :: output_guv() {
     }
   }
 
+/*
+  double * work = new double[ce -> mgrid * sv -> natv];
+  for (int ig = 0; ig < ce -> mgrid; ++ig) {
+    int i = ig * sv -> natv;
+    for (int iv = 0; iv < sv -> natv; ++iv) {
+      work[i + iv] = guv[iv][ig].real();
+    }
+  }
+
+  for (int k = 0; k < ce -> grid[2] / zprocs; ++k) {
+    int p = sizeof(int) * 4 + 
+            sizeof(double) * ((yrank * ce -> grid[0] * ce -> grid[1] / yprocs
+            * sv -> natv + k * ce -> grid[0] * ce -> grid[1] / yprocs
+            * sv -> natv * yprocs) 
+            + zrank * ce -> mgrid * sv -> natv * yprocs);
+    MPI_File_seek(file_guv, p, MPI_SEEK_SET);
+    int i = k * ce -> grid[0] * ce -> grid[1] / yprocs * sv -> natv;
+    MPI_File_write_all(file_guv, &work[i], sv -> natv * ce -> grid[0] * 
+                       ce -> grid[1] / yprocs, MPI_DOUBLE_PRECISION, status);
+  }
+*/
   MPI_File_close(&file_guv);
 
   if (myrank == 0) cout << "done." << endl;

@@ -9,6 +9,7 @@
 #PBS -v OMP_NUM_THREADS=6
 #------- Program execution ----------- 
 module load use.own
+module load gcc/8.3.1
 module load gcc8.3.1-cuda10.2-ucx1.7.0
 INP=gpcr.inp
 cd $PBS_O_WORKDIR
