@@ -44,9 +44,14 @@ void RISM3D :: iterate() {
 
   if (myrank == 0) cout << "relaxing 3D UV RISM:" << endl;
   bool conver = false;
+  bool diverge = false;
   for (int istep = 1; istep <= co -> maxstep; ++istep) {
     calculate(ft);
     double rms = cal_rms ();
+    diverge = !isfinite(rms);
+    if (diverge) {
+      break;
+    }
     if (rms <= co -> convergence) {
       conver = true;
     } else {
@@ -65,7 +70,11 @@ void RISM3D :: iterate() {
       break;
     }
   }
-  if (!conver) {
+  if (diverge) {
+    if (myrank == 0) {
+      cout << "Calculation diverged." << endl;
+    }
+  } else if (!conver) {
     if (myrank == 0) {
       cout << "3D UV RISM: reached limit # of relaxation steps: "
 	   << co -> maxstep << endl;
