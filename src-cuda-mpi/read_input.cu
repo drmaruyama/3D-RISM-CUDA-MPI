@@ -56,14 +56,11 @@ void RISM3D :: read_input (string control, string structure, bool centering) {
       cout << "reading solute data file : " << structure << endl;
     }
 
-    int num;
-
     string tmp;
     in_file >> tmp;
 
     if (isNaturalNumber(tmp)) {
       num = std::stoi(tmp);
-      cout << num << endl;
     } else {
       cout << "Error: Number of solute atom is not a natural number." << endl;
       exit(1);
