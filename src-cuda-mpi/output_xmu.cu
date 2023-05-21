@@ -16,15 +16,15 @@ void RISM3D :: output_xmu(double * & xmu, double pmv) {
     xmua += xmu[iv];
   }
 
-  out_file << "Solvation Free Energy = " << fixed << setprecision(5) 
-  	   << ibeta * xmua << " (kcal/mol)" << endl;
+  out_file << "Solvation_Free_Energy(SC): " << fixed << setprecision(5)
+           << ibeta * xmua << " (kcal/mol)" << endl;
   for (int iv = 0; iv < sv -> natv; ++iv) {
-    out_file << "  " << iv << " -----> " << fixed << setprecision(5) 
-    	     << ibeta * xmu[iv] << endl;
+    out_file << "  " << iv << " -----> " << fixed << setprecision(5)
+             << ibeta * xmu[iv] << endl;
   }
-
   out_file << endl;
-  out_file << "PMV  = " << fixed << setprecision(5)
+
+  out_file << "PMV: " << fixed << setprecision(5)
            << pmv << " (cc/mol)" << endl;
 
   out_file.close();
