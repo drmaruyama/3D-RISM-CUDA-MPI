@@ -5,6 +5,19 @@
 #include "rism3d.h"
 #include "version.h"
 
+bool isNaturalNumber(const std::string& str) {
+  try {
+    size_t pos;
+    int num = std::stoi(str, &pos);
+    if (pos != str.length()) {
+      return false;
+    }
+    return num >= 0;
+  } catch (const std::exception& e) {
+    return false;
+  }
+}
+
 void RISM3D :: read_input (string control, string structure, bool centering) {
   int num;
 
@@ -17,7 +30,7 @@ void RISM3D :: read_input (string control, string structure, bool centering) {
     string check;
     in_file >> outlist >> co -> ksave >> check;
     if (check != version) {
-      cout << "This input file is for old version." << endl;
+      cout << "Error: This input file is for old version." << endl;
       exit (1);
     }
 
@@ -28,7 +41,7 @@ void RISM3D :: read_input (string control, string structure, bool centering) {
     } else if (closure == "HNC") {
       clos = 1;
     } else {
-      cout << "3D-RISM: unexpected closure switch " << endl;
+      cout << "Error: Unexpected closure switch " << endl;
       exit(1);
     }
     in_file >> fsolvent;
@@ -43,7 +56,19 @@ void RISM3D :: read_input (string control, string structure, bool centering) {
       cout << "reading solute data file : " << structure << endl;
     }
 
-    in_file >> num;
+    int num;
+
+    string tmp;
+    in_file >> tmp;
+
+    if (isNaturalNumber(tmp)) {
+      num = std::stoi(tmp);
+      cout << num << endl;
+    } else {
+      cout << "Error: Number of solute atom is not a natural number." << endl;
+      exit(1);
+    }
+
     su -> init(num);
 
     for (int iu = 0; iu < su -> num; ++iu) {
