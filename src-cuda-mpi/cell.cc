@@ -3,6 +3,8 @@
 #include "cell.h"
 using namespace std;
 
+#define MAX_DR 0.5
+
 void Cell :: setup(int procs, int yprocs, int zprocs, 
 		       int myrank, int yrank, int zrank) {
   MPI_Bcast(box, 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -19,6 +21,13 @@ void Cell :: setup(int procs, int yprocs, int zprocs,
   dr[0] = box[0] / grid[0];
   dr[1] = box[1] / grid[1];
   dr[2] = box[2] / grid[2];
+
+  if ((myrank == 0) && (dr[0] > MAX_DR || dr[1] > MAX_DR || dr[2] > MAX_DR)) {
+    cout << "##########################################" << endl;
+    cout << "WARRING: Grid spacing is greater than "
+        << MAX_DR << "." << endl;
+    cout << "##########################################" << endl;
+  }
 
   setup_mpi(procs, yprocs, zprocs, myrank, yrank, zrank);
 }
