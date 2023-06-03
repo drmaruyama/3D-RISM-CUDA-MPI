@@ -1,11 +1,11 @@
-Solvation_Free_Energy(SC): 248229.74694 !(J/mol)
+SFE(SC)= 248229.74694 !(J/mol)
   0 -----> 7375988115.21257
   1 -----> -7375739885.46563
 
-Solvation_Free_Energy(GF): -969326.19401 !(J/mol)
+SFE(GF)= -969326.19401 !(J/mol)
   0 -----> 7375536341.81759
   1 -----> -7376505668.01161
 
-PMV: 4015.61881 !(cc/mol)
-Pressure: 2333.09478 !(J/cc)
-Correction_Term: -5550884.10149 !(J/mol)
+PMV= 4015.61881 !(cc/mol)
+Pressure= 2333.09478 !(J/cc)
+Correction_Term= -5550884.10149 !(J/mol)
