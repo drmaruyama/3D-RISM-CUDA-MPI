@@ -10,9 +10,8 @@ void RISM3D :: output_euv(double * & euv) {
   ofstream out_file;
   out_file.open ((fname + exteuv).c_str());
 
-//  double ibeta = avogadoro * boltzmann * sv -> temper / kcal2J;
+  double dv = ce -> dv;
 
-  double dv = ce -> dv / kcal2J;
   for (size_t iu = 0; iu < su -> num; ++iu) {
     double euva = 0.0;
     size_t i = iu * sv -> natv;

@@ -1,5 +1,11 @@
-Solvation Free Energy = -6046.86 (kcal/mol)
-  0 -----> 1.8427e+06
-  1 -----> -1.84875e+06
+Solvation_Free_Energy(SC): -25299570.64680 !(J/mol)
+  0 -----> 7709166824.66787
+  1 -----> -7734466395.31467
 
-PMV  = 3538.69 (cc/mol)
+Solvation_Free_Energy(GF): -26459908.26004 !(J/mol)
+  0 -----> 7708724814.88723
+  1 -----> -7735184723.14727
+
+PMV: 3538.68268 !(cc/mol)
+Pressure: 2333.09478 !(J/cc)
+Correction_Term: -4891604.10022 !(J/mol)
