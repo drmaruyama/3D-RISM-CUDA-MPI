@@ -6,14 +6,9 @@ using namespace std;
 #define MAX_DR 0.5
 
 void Cell :: setup(int procs, int yprocs, int zprocs, 
-		       int myrank, int yrank, int zrank) {
+		   int myrank, int yrank, int zrank) {
   MPI_Bcast(box, 3, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Bcast(grid, 3, MPI_INT, 0, MPI_COMM_WORLD);
-
-  //  if (grid[1] != grid[2]) {
-  //    if (myrank == 0) cout << "Please set Ny = Nz!" << endl;
-  //    exit(1);
-  //  }
 
   volume = box[0] * box[1] * box[2];
   ngrid = grid[0] * grid[1] * grid[2];

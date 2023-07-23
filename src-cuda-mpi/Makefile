@@ -1,6 +1,3 @@
-#CUDA_DIR=/system/apps/ubuntu/20.04-202304/cuda/11.8.0/
-#MPI_DIR=/opt/MPI/OpenMPI/1.6.5/GNU/4.4.7
-
 CC 	= mpic++
 
 CFLAGS 	= -O3 
@@ -8,10 +5,10 @@ CFLAGS 	= -O3
 
 NVCC	= nvcc
 
-#NVFLAGS = -O3 -m64 -gencode=arch=compute_70,code=sm_70 -I$(CUDA_DIR)/include -DTEST -DMVAPICH -DGDR
+#NVFLAGS = -O3 -m64 -gencode=arch=compute_90,code=sm_90 -I$(CUDA_DIR)/include -DTEST -DMVAPICH -DGDR
 NVFLAGS = -O3 -m64 -gencode=arch=compute_90,code=sm_90 -I$(CUDA_DIR)/include -DTEST -DOPENMPI -DGDR
 
-LDFLAGS = -L$(CUDA_DIR)/lib64 
+#LDFLAGS = -L$(CUDA_DIR)/lib64 
 LIBS = -lcuda -lcudart -lcufft
 
 OBJS   	= main.o\

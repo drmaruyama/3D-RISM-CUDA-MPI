@@ -8,7 +8,7 @@ void Solvent :: setup_mpi(int myrank) {
   void alloc3D (vector <vector <double * > > &, int, int, int);
 
   MPI_Bcast(&temper, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-  MPI_Bcast(&xikt, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+  MPI_Bcast(&xt, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
   MPI_Bcast(&natv, 1, MPI_INT, 0, MPI_COMM_WORLD);
   MPI_Bcast(&ntab, 1, MPI_INT, 0, MPI_COMM_WORLD);
 

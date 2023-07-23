@@ -16,7 +16,9 @@ double RISM3D :: cal_pmv () {
   double cuva;
   MPI_Reduce(&cuv, &cuva, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
   cuv = cuva * ce -> dv;
-  double pmv = sv -> xikt * (1.0 - cuv);
+
+  double ibeta = avogadoro * boltzmann * sv -> temper;
+  double pmv = sv -> xt * (1.0 - cuv) * ibeta;
 
   return pmv;
 }

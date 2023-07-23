@@ -22,8 +22,6 @@ void RISM3D :: cal_LJ() {
 
   cudaMallocHost(&siguv, su -> num * sv -> natv * sizeof(double));
   cudaMallocHost(&epsuv, su -> num * sv -> natv * sizeof(double));
-//  siguv = new double[su -> num * sv -> natv];
-//  epsuv = new double[su -> num * sv -> natv];
 
   double lambda1;
   if (adswitch == 1) {
