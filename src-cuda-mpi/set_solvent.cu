@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include "rism3d.h"
 
